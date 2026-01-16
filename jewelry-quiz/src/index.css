@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  --color-gold: #D4AF37;
+}
+
+body {
+  background-color: #0F0F0F;
+}
+
+/* Custom Serif Font emphasis */
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Luxury Gold Button Pulse */
+.btn-gold-glow {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+  transition: all 0.5s ease;
+}
+
+.btn-gold-glow:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
