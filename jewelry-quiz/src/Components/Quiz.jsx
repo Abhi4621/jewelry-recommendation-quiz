@@ -17,9 +17,14 @@ const QUESTIONS = [
     title: "Which aesthetic resonates?",
     description: "Select the silhouette that speaks to your soul.",
     options: [
-      { label: 'Vintage & Ornate', value: 'vintage', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400' },
-      { label: 'Modern & Minimal', value: 'modern', img: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400' },
-      { label: 'Classic Solitaire', value: 'classic', img: 'https://images.unsplash.com/photo-1588444839799-eb0ae5133a76?w=400' }
+      { label: 'Vintage & Ornate', value: 'vintage', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600' },
+      { label: 'Modern & Minimal', value: 'modern', img: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600' },
+      { 
+        label: 'Classic Solitaire', 
+        value: 'classic', 
+        // Ensure this file is in your /public folder!
+        img: '/photo/download.jpg'
+      }
     ]
   },
   {
@@ -55,7 +60,7 @@ export default function Quiz({ onComplete }) {
       <div className="mb-16 flex flex-col items-center">
         <div className="w-full max-w-md bg-white/10 h-[2px] rounded-full overflow-hidden">
           <motion.div 
-            className="h-full bg-[#D4AF37]" // Gold Progress Bar
+            className="h-full bg-[#D4AF37]" 
             animate={{ width: `${((step + 1) / QUESTIONS.length) * 100}%` }}
             transition={{ duration: 0.8, ease: "circOut" }}
           />
@@ -92,13 +97,18 @@ export default function Quiz({ onComplete }) {
                 onClick={() => handleSelect(opt.value)}
                 className="group relative overflow-hidden bg-white/5 border border-white/10 p-6 backdrop-blur-md transition-all duration-500 hover:border-[#D4AF37]/50 hover:bg-white/10"
               >
-                {/* Visual Content */}
+                {/* Visual Content with Error Handling */}
                 {opt.img ? (
-                  <div className="overflow-hidden aspect-[4/5] mb-6">
+                  <div className="overflow-hidden aspect-[4/5] mb-6 bg-neutral-900">
                     <img 
                       src={opt.img} 
                       className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
-                      alt="" 
+                      alt={opt.label}
+                      // If the local file /download.jpg is missing, show a placeholder
+                      onError={(e) => {
+                        e.target.onerror = null; 
+                        e.target.src = "https://images.unsplash.com/photo-1588444839799-eb0ae5133a76?w=600";
+                      }}
                     />
                   </div>
                 ) : (
@@ -107,7 +117,6 @@ export default function Quiz({ onComplete }) {
                   </div>
                 )}
                 
-                {/* Label */}
                 <div className="relative">
                   <span className="block font-serif text-sm tracking-widest uppercase mb-1 group-hover:text-[#D4AF37] transition-colors">
                     {opt.label}
